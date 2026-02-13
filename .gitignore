@@ -1,0 +1,29 @@
+# dbt
+target/
+dbt_packages/
+logs/
+.user.yml
+
+# Credentials - NE PAS COMMITER
+profiles.yml
+*.json
+!package.json
+
+# Python
+__pycache__/
+*.py[cod]
+venv/
+.venv/
+.env
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# dbt internal
+dbt_internal_packages/
