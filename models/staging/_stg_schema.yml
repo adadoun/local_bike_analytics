@@ -1,0 +1,201 @@
+version: 2
+
+models:
+  - name: stg_brands
+    description: "Staging table for bike brands"
+    columns:
+      - name: brand_id
+        description: "Primary key for brands"
+        tests:
+          - unique
+          - not_null
+      - name: brand_name
+        description: "Name of the brand"
+        tests:
+          - not_null
+
+  - name: stg_categories
+    description: "Staging table for product categories"
+    columns:
+      - name: category_id
+        description: "Primary key for categories"
+        tests:
+          - unique
+          - not_null
+      - name: category_name
+        description: "Name of the category (e.g., Mountain Bikes, Road Bikes)"
+        tests:
+          - not_null
+
+  - name: stg_stores
+    description: "Staging table for Local Bike store locations"
+    columns:
+      - name: store_id
+        description: "Primary key for stores"
+        tests:
+          - unique
+          - not_null
+      - name: store_name
+        description: "Name of the store"
+        tests:
+          - not_null
+      - name: store_city
+        description: "City where the store is located"
+      - name: store_state
+        description: "US State where the store is located"
+
+  - name: stg_staffs
+    description: "Staging table for store employees"
+    columns:
+      - name: staff_id
+        description: "Primary key for staff members"
+        tests:
+          - unique
+          - not_null
+      - name: staff_full_name
+        description: "Full name of the staff member"
+      - name: is_active
+        description: "Whether the staff member is currently active"
+      - name: store_id
+        description: "Foreign key to the store where staff works"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_stores')
+              field: store_id
+
+  - name: stg_customers
+    description: "Staging table for customers"
+    columns:
+      - name: customer_id
+        description: "Primary key for customers"
+        tests:
+          - unique
+          - not_null
+      - name: customer_full_name
+        description: "Full name of the customer"
+      - name: email
+        description: "Customer email address"
+      - name: state
+        description: "US State where customer resides"
+
+  - name: stg_products
+    description: "Staging table for products (bikes)"
+    columns:
+      - name: product_id
+        description: "Primary key for products"
+        tests:
+          - unique
+          - not_null
+      - name: product_name
+        description: "Name of the product"
+        tests:
+          - not_null
+      - name: brand_id
+        description: "Foreign key to brands"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_brands')
+              field: brand_id
+      - name: category_id
+        description: "Foreign key to categories"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_categories')
+              field: category_id
+      - name: model_year
+        description: "Model year of the product"
+      - name: list_price
+        description: "List price of the product"
+        tests:
+          - not_null
+
+  - name: stg_stocks
+    description: "Staging table for inventory levels by store and product"
+    columns:
+      - name: store_id
+        description: "Foreign key to stores"
+        tests:
+          - not_null
+      - name: product_id
+        description: "Foreign key to products"
+        tests:
+          - not_null
+      - name: stock_quantity
+        description: "Current quantity in stock"
+
+  - name: stg_orders
+    description: "Staging table for customer orders"
+    columns:
+      - name: order_id
+        description: "Primary key for orders"
+        tests:
+          - unique
+          - not_null
+      - name: customer_id
+        description: "Foreign key to customers"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_customers')
+              field: customer_id
+      - name: order_status
+        description: "Status code of the order (1=Pending, 2=Processing, 3=Rejected, 4=Completed)"
+      - name: order_status_name
+        description: "Human-readable status name"
+      - name: order_date
+        description: "Date when order was placed"
+        tests:
+          - not_null
+      - name: store_id
+        description: "Foreign key to the store where order was placed"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_stores')
+              field: store_id
+      - name: staff_id
+        description: "Foreign key to the staff member who processed the order"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_staffs')
+              field: staff_id
+
+  - name: stg_order_items
+    description: "Staging table for order line items"
+    columns:
+      - name: order_id
+        description: "Foreign key to orders"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_orders')
+              field: order_id
+      - name: item_id
+        description: "Line item number within the order"
+        tests:
+          - not_null
+      - name: product_id
+        description: "Foreign key to products"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_products')
+              field: product_id
+      - name: quantity
+        description: "Quantity ordered"
+        tests:
+          - not_null
+      - name: unit_price
+        description: "Price per unit at time of sale"
+      - name: discount_percent
+        description: "Discount percentage applied (0 to 1)"
+      - name: line_total
+        description: "Total revenue for this line item after discount"
+      - name: line_total_gross
+        description: "Total revenue before discount"
+      - name: discount_amount
+        description: "Total discount amount in dollars"

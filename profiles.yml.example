@@ -1,0 +1,26 @@
+# Copy this file to profiles.yml and fill in your values
+# DO NOT commit profiles.yml to version control
+
+local_bike:
+  target: dev
+  outputs:
+    dev:
+      type: bigquery
+      method: oauth  # Use 'service-account' for production
+      project: "YOUR_GCP_PROJECT_ID"  # Replace with your GCP project
+      dataset: local_bike_dbt_dev
+      threads: 4
+      timeout_seconds: 300
+      location: EU  # or US depending on your BigQuery region
+      priority: interactive
+      
+    prod:
+      type: bigquery
+      method: service-account
+      project: "YOUR_GCP_PROJECT_ID"
+      dataset: local_bike_dbt_prod
+      threads: 4
+      timeout_seconds: 300
+      location: EU
+      priority: interactive
+      keyfile: "/path/to/your/service-account-key.json"

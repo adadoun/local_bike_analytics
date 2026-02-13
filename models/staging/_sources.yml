@@ -1,0 +1,136 @@
+version: 2
+
+sources:
+  - name: local_bike
+    description: "Raw data from Local Bike's transactional database stored in BigQuery"
+    schema: local_bike  # Le dataset BigQuery où sont tes données brutes
+    
+    tables:
+      - name: brands
+        description: "Bike brand reference table"
+        columns:
+          - name: brand_id
+            description: "Primary key"
+            tests:
+              - unique
+              - not_null
+          - name: brand_name
+            description: "Brand name"
+
+      - name: categories
+        description: "Product category reference table"
+        columns:
+          - name: category_id
+            description: "Primary key"
+            tests:
+              - unique
+              - not_null
+          - name: category_name
+            description: "Category name"
+
+      - name: customers
+        description: "Customer information"
+        columns:
+          - name: customer_id
+            description: "Primary key"
+            tests:
+              - unique
+              - not_null
+          - name: first_name
+          - name: last_name
+          - name: phone
+          - name: email
+          - name: street
+          - name: city
+          - name: state
+          - name: zip_code
+
+      - name: order_items
+        description: "Order line items"
+        columns:
+          - name: order_id
+            description: "Foreign key to orders"
+            tests:
+              - not_null
+          - name: item_id
+            description: "Line item number"
+            tests:
+              - not_null
+          - name: product_id
+            description: "Foreign key to products"
+          - name: quantity
+          - name: list_price
+          - name: discount
+
+      - name: orders
+        description: "Order headers"
+        columns:
+          - name: order_id
+            description: "Primary key"
+            tests:
+              - unique
+              - not_null
+          - name: customer_id
+          - name: order_status
+          - name: order_date
+          - name: required_date
+          - name: shipped_date
+          - name: store_id
+          - name: staff_id
+
+      - name: products
+        description: "Product catalog"
+        columns:
+          - name: product_id
+            description: "Primary key"
+            tests:
+              - unique
+              - not_null
+          - name: product_name
+          - name: brand_id
+          - name: category_id
+          - name: model_year
+          - name: list_price
+
+      - name: staffs
+        description: "Store employees"
+        columns:
+          - name: staff_id
+            description: "Primary key"
+            tests:
+              - unique
+              - not_null
+          - name: first_name
+          - name: last_name
+          - name: email
+          - name: phone
+          - name: active
+          - name: store_id
+          - name: manager_id
+
+      - name: stocks
+        description: "Inventory levels by store and product"
+        columns:
+          - name: store_id
+            tests:
+              - not_null
+          - name: product_id
+            tests:
+              - not_null
+          - name: quantity
+
+      - name: stores
+        description: "Store locations"
+        columns:
+          - name: store_id
+            description: "Primary key"
+            tests:
+              - unique
+              - not_null
+          - name: store_name
+          - name: phone
+          - name: email
+          - name: street
+          - name: city
+          - name: state
+          - name: zip_code
