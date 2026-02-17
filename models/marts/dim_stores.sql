@@ -1,4 +1,4 @@
--- Dimension magasins avec métriques
+-- Store dimension with metrics
 with stores as (
     select * from {{ ref('stg_stores') }}
 ),

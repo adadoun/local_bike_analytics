@@ -1,4 +1,4 @@
--- Agrégation des ventes par catégorie de produit
+-- Sales aggregation by product category
 with sales as (
     select * from {{ ref('fct_sales_by_product') }}
     where order_status = 4  -- Completed orders only

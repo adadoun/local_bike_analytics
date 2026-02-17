@@ -7,6 +7,10 @@ renamed as (
         order_id,
         customer_id,
         order_status,
+        -- order_status mapping is an assumption based on common e-commerce patterns
+        -- (1=Pending, 2=Processing, 3=Rejected, 4=Completed)
+        -- Observation: 89% of orders have status=4, suggesting it represents 
+        -- a final/completed state
         case order_status
             when 1 then 'Pending'
             when 2 then 'Processing'

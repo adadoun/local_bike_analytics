@@ -1,5 +1,5 @@
--- Agrégation des ventes par magasin et mois
--- Idéal pour les graphiques de tendance temporelle
+-- Sales aggregation by store and month
+-- For time series trend charts
 with sales as (
     select * from {{ ref('fct_sales') }}
     where order_status = 4  -- Completed orders only

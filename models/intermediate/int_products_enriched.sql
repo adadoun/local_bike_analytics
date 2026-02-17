@@ -1,4 +1,4 @@
--- Produits enrichis avec les informations de marque et catégorie
+-- Products enriched with brand and category information
 with products as (
     select * from {{ ref('stg_products') }}
 ),

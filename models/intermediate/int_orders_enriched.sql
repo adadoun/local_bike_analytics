@@ -1,4 +1,4 @@
--- Commandes enrichies avec informations client, magasin et vendeur
+-- Orders enriched with customer, store and staff information
 with orders as (
     select * from {{ ref('stg_orders') }}
 ),

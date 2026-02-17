@@ -1,4 +1,4 @@
--- Dimension produits avec métriques de stock
+-- Product dimension with stock metrics
 with products as (
     select * from {{ ref('int_products_enriched') }}
 ),

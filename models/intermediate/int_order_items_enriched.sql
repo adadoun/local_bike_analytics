@@ -1,4 +1,4 @@
--- Lignes de commandes enrichies avec informations produit
+-- Order line items enriched with product information
 with order_items as (
     select * from {{ ref('stg_order_items') }}
 ),

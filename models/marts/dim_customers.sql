@@ -1,4 +1,4 @@
--- Dimension clients avec métriques d'achat
+-- Customer dimension with purchase metrics
 with customers as (
     select * from {{ ref('stg_customers') }}
 ),

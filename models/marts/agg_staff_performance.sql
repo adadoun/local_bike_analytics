@@ -1,4 +1,4 @@
--- Performance des vendeurs
+-- Staff sales performance
 with sales as (
     select * from {{ ref('fct_sales') }}
     where order_status = 4  -- Completed orders only

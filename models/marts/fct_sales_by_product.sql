@@ -1,5 +1,5 @@
--- Table de faits des ventes par produit
--- Grain: une ligne par produit par commande
+-- Sales fact table by product
+-- Grain: one row per product per order
 with orders as (
     select * from {{ ref('int_orders_enriched') }}
 ),
